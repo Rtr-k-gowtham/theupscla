@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Upscala - Digital Marketing Company in Karur</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JPV9LJWSK7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-JPV9LJWSK7');
+    </script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -307,6 +316,140 @@
         <a href="https://wa.me/919043619695" target="_blank" class="whatsapp-btn">
             <i class="fab fa-whatsapp"></i>
         </a>
+    </div>
+
+    <!-- Popup Form -->
+    <div id="popupOverlay" class="popup-overlay">
+        <div class="popup-container">
+            <div class="popup-header">
+                <h2>Get Your Free Consultation</h2>
+                <button id="popupClose" class="popup-close">&times;</button>
+            </div>
+            
+            <!-- Step Indicators -->
+            <div class="step-indicators">
+                <div class="step active">1</div>
+                <div class="step">2</div>
+                <div class="step">3</div>
+            </div>
+
+            <!-- Step 1: Contact Information -->
+            <div id="step1" class="form-step active">
+                <h3>Contact Information</h3>
+                <div class="form-group">
+                    <label for="clientName">Full Name *</label>
+                    <input type="text" id="clientName" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientEmail">Email Address *</label>
+                    <input type="email" id="clientEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientPhone">Phone Number *</label>
+                    <input type="tel" id="clientPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="companyName">Company Name</label>
+                    <input type="text" id="companyName">
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="nextStep1" class="btn-primary">Next Step</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Service Selection -->
+            <div id="step2" class="form-step">
+                <h3>Select Services</h3>
+                <p>Choose the services you're interested in:</p>
+                <div class="services-grid">
+                    <div class="service-option">
+                        <input type="checkbox" id="service1" value="Website Development">
+                        <label for="service1">Website Development</label>
+                    </div>
+                    <div class="service-option">
+                        <input type="checkbox" id="service2" value="E-commerce">
+                        <label for="service2">E-commerce</label>
+                    </div>
+                    <div class="service-option">
+                        <input type="checkbox" id="service3" value="SEO">
+                        <label for="service3">SEO</label>
+                    </div>
+                    <div class="service-option">
+                        <input type="checkbox" id="service4" value="Social Media Marketing">
+                        <label for="service4">Social Media Marketing</label>
+                    </div>
+                    <div class="service-option">
+                        <input type="checkbox" id="service5" value="Paid Ads">
+                        <label for="service5">Paid Ads</label>
+                    </div>
+                    <div class="service-option">
+                        <input type="checkbox" id="service6" value="Graphic Design">
+                        <label for="service6">Graphic Design</label>
+                    </div>
+                    <div class="service-option">
+                        <input type="checkbox" id="service7" value="Video Editing">
+                        <label for="service7">Video Editing</label>
+                    </div>
+                    <div class="service-option">
+                        <input type="checkbox" id="service8" value="Photography">
+                        <label for="service8">Photography</label>
+                    </div>
+                    <div class="service-option">
+                        <input type="checkbox" id="service9" value="AI Automation">
+                        <label for="service9">AI Automation</label>
+                    </div>
+                    <div class="service-option">
+                        <input type="checkbox" id="service10" value="ERP Implementation">
+                        <label for="service10">ERP Implementation</label>
+                    </div>
+                    <div class="service-option">
+                        <input type="checkbox" id="service11" value="Software Development">
+                        <label for="service11">Software Development</label>
+                    </div>
+                    <div class="service-option">
+                        <input type="checkbox" id="service12" value="All Design Works">
+                        <label for="service12">All Design Works</label>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="backStep1" class="btn-secondary">Back</button>
+                    <button type="button" id="nextStep2" class="btn-primary">Next Step</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Summary -->
+            <div id="step3" class="form-step">
+                <h3>Confirm Your Details</h3>
+                <div class="summary-section">
+                    <h4>Contact Information:</h4>
+                    <div id="summaryContact"></div>
+                </div>
+                <div class="summary-section">
+                    <h4>Selected Services:</h4>
+                    <div id="summaryServices"></div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="backStep2" class="btn-secondary">Back</button>
+                    <button type="button" id="submitForm" class="btn-primary">Submit</button>
+                </div>
+            </div>
+
+            <!-- Success Step -->
+            <div id="successStep" class="form-step">
+                <div class="success-content">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Thank You!</h3>
+                    <p>Your inquiry has been submitted successfully. We'll get back to you within 24 hours.</p>
+                    <div class="form-actions">
+                        <button type="button" id="openWhatsApp" class="btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                            Continue on WhatsApp
+                        </button>
+                        <button type="button" id="closePopup" class="btn-secondary">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="js/script.js"></script>
