@@ -8,10 +8,17 @@
     "build": "echo 'Build complete - static files ready'",
     "preview": "npx serve ."
   },
-  "keywords": ["digital-marketing", "website", "karur"],
+  "keywords": [
+    "digital-marketing",
+    "website",
+    "karur"
+  ],
   "author": "The Upscala",
   "license": "MIT",
   "devDependencies": {
     "serve": "^14.2.1"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.75.0"
   }
 }
