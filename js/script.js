@@ -5,34 +5,41 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link');
 
     // Toggle mobile menu
-    hamburger.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+    }
 
     // Close mobile menu when clicking on a link
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
-            navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
+            if (navMenu && hamburger) {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
         });
     });
 
     // Smooth scrolling for navigation links
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault();
             const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
             
-            if (targetSection) {
-                const headerHeight = document.querySelector('.header').offsetHeight;
-                const targetPosition = targetSection.offsetTop - headerHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+            // Only prevent default and smooth scroll for hash links on same page
+            if (targetId && targetId.startsWith('#')) {
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    e.preventDefault();
+                    const headerHeight = document.querySelector('.header').offsetHeight;
+                    const targetPosition = targetSection.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
             }
         });
     });
@@ -40,10 +47,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Header background on scroll
     window.addEventListener('scroll', function() {
         const header = document.querySelector('.header');
-        if (window.scrollY > 100) {
-            header.style.background = 'rgba(10, 10, 10, 0.98)';
-        } else {
-            header.style.background = 'rgba(10, 10, 10, 0.95)';
+        if (header) {
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(10, 10, 10, 0.98)';
+            } else {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
         }
     });
 
@@ -73,12 +82,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // CTA Button Click Handler
     const ctaButton = document.querySelector('.cta-button');
-    ctaButton.addEventListener('click', function() {
-        // Open popup form
-        const popup = document.querySelector('#popupOverlay');
-        popup.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
+    if (ctaButton) {
+        ctaButton.addEventListener('click', function() {
+            // Open popup form
+            const popup = document.querySelector('#popupOverlay');
+            if (popup) {
+                popup.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    }
 
     // Add click handlers for contact methods
     const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
@@ -111,6 +124,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const popupClose = document.getElementById('popupClose');
     const steps = document.querySelectorAll('.form-step');
     const stepIndicators = document.querySelectorAll('.step');
+    
+    // Only initialize popup if elements exist
+    if (!popup || !popupClose || steps.length === 0) {
+        return;
+    }
     
     let currentStep = 1;
     let formData = {
@@ -145,10 +163,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show specific step
     function showStep(stepNumber) {
         steps.forEach(step => step.classList.remove('active'));
-        if (stepNumber === 'successStep') {
-            document.getElementById('successStep').classList.add('active');
+        
+        let targetStep;
+        if (stepNumber === 'success' || stepNumber === 'successStep') {
+            targetStep = document.getElementById('successStep');
         } else {
-            document.getElementById(`step${stepNumber}`).classList.add('active');
+            targetStep = document.getElementById(`step${stepNumber}`);
+        }
+        
+        if (targetStep) {
+            targetStep.classList.add('active');
         }
         
         // Update step indicators
@@ -163,7 +187,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Step 1 to Step 2
-    document.getElementById('nextStep1').addEventListener('click', function() {
+    const nextStep1 = document.getElementById('nextStep1');
+    if (!nextStep1) return;
+    
+    nextStep1.addEventListener('click', function() {
         const name = document.getElementById('clientName').value.trim();
         const email = document.getElementById('clientEmail').value.trim();
         const phone = document.getElementById('clientPhone').value.trim();
@@ -189,7 +216,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Step 2 to Step 3
-    document.getElementById('nextStep2').addEventListener('click', function() {
+    const nextStep2 = document.getElementById('nextStep2');
+    if (!nextStep2) return;
+    
+    nextStep2.addEventListener('click', function() {
         const selectedServices = [];
         const checkboxes = document.querySelectorAll('.service-option input[type="checkbox"]:checked');
         
@@ -209,31 +239,46 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Back buttons
-    document.getElementById('backStep1').addEventListener('click', function() {
-        currentStep = 1;
-        showStep(1);
-    });
+    const backStep1 = document.getElementById('backStep1');
+    if (backStep1) {
+        backStep1.addEventListener('click', function() {
+            currentStep = 1;
+            showStep(1);
+        });
+    }
 
-    document.getElementById('backStep2').addEventListener('click', function() {
-        currentStep = 2;
-        showStep(2);
-    });
+    const backStep2 = document.getElementById('backStep2');
+    if (backStep2) {
+        backStep2.addEventListener('click', function() {
+            currentStep = 2;
+            showStep(2);
+        });
+    }
 
     // Submit form
-    document.getElementById('submitForm').addEventListener('click', function() {
-        sendEmail();
-        showStep('successStep'); // Show success step
-    });
+    const submitForm = document.getElementById('submitForm');
+    if (submitForm) {
+        submitForm.addEventListener('click', function() {
+            sendEmail();
+            showStep('success'); // Show success step
+        });
+    }
 
     // Success step actions
-    document.getElementById('openWhatsApp').addEventListener('click', function() {
-        const message = createWhatsAppMessage();
-        const whatsappUrl = `https://wa.me/919043619695?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
-        closePopup();
-    });
+    const openWhatsApp = document.getElementById('openWhatsApp');
+    if (openWhatsApp) {
+        openWhatsApp.addEventListener('click', function() {
+            const message = createWhatsAppMessage();
+            const whatsappUrl = `https://wa.me/919043619695?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            closePopup();
+        });
+    }
 
-    document.getElementById('closePopup').addEventListener('click', closePopup);
+    const closePopupBtn = document.getElementById('closePopup');
+    if (closePopupBtn) {
+        closePopupBtn.addEventListener('click', closePopup);
+    }
 
     // Helper functions
     function isValidEmail(email) {
@@ -244,6 +289,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateSummary() {
         const contactSummary = document.getElementById('summaryContact');
         const servicesSummary = document.getElementById('summaryServices');
+        
+        if (!contactSummary || !servicesSummary) return;
 
         contactSummary.innerHTML = `
             <p><strong>Name:</strong> ${formData.name}</p>
@@ -327,10 +374,15 @@ Please follow up with this lead.
     }
 
     function resetForm() {
-        document.getElementById('clientName').value = '';
-        document.getElementById('clientEmail').value = '';
-        document.getElementById('clientPhone').value = '';
-        document.getElementById('companyName').value = '';
+        const clientName = document.getElementById('clientName');
+        const clientEmail = document.getElementById('clientEmail');
+        const clientPhone = document.getElementById('clientPhone');
+        const companyName = document.getElementById('companyName');
+        
+        if (clientName) clientName.value = '';
+        if (clientEmail) clientEmail.value = '';
+        if (clientPhone) clientPhone.value = '';
+        if (companyName) companyName.value = '';
         
         const checkboxes = document.querySelectorAll('.service-option input[type="checkbox"]');
         checkboxes.forEach(checkbox => {
